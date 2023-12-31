@@ -12,7 +12,7 @@ const Navbar = () => {
 
       {/* 2. The nav links and others */}
       <div className="flex gap-5">
-        <Link to="/register">
+        <Link to="/register" className="sm:block hidden">
           <CustomButton text="Register" />
         </Link>
 
