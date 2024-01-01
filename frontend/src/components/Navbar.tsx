@@ -4,7 +4,7 @@ import { logo } from "../assets";
 
 const Navbar = () => {
   return (
-    <div className="w-full sticky flex justify-between p-5 bg-blue-100 z-20">
+    <div className="w-full top-0 left-0 sticky flex justify-between p-5 bg-blue-100 z-20">
       {/* 1. The LOGO */}
       <Link to="/">
         <img src={logo} alt="logo" className="w-28" />
