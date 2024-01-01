@@ -11,6 +11,9 @@ export default {
       },
       borderRadius: {
         buttonRadius: "1.5rem"
+      },
+      screens: {
+        xs: "400px"
       }
     },
   },
