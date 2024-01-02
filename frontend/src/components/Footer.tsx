@@ -5,7 +5,7 @@ import { AiOutlineInstagram, AiFillGithub } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <footer className="w-full flex flex-col justify-center items-center gap-5 bg-blue-100 pt-5">
+    <footer className="mt-auto w-full flex flex-col justify-center items-center gap-5 bg-blue-100 pt-5">
       {/* 1. The logo */}
       <Link to="/">
         <img src={logo} alt="logo" className="w-32" />
