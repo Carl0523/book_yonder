@@ -73,7 +73,64 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
 
     const { password: userPassword, ...rest } = user._doc;
 
-    res.status(201).json(rest);
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * If user is registered, generate token. Otherwise, for new user, generate a random password and
+ * create new User and store in database, then generate token.
+ * @param req The POST request from client side: containing email, displayName, photoURL
+ * @param res Response the client with userinfo excluding the password
+ * @param next Handle error
+ */
+const userGoogleLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email, displayName, photoURL } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    // First, Check for registered user
+    if (user) {
+      generateToken(res, user._id);
+      const { password, ...rest } = user._doc;
+      res.status(200).json(rest);
+    } else {
+      // Generate a random 16 digits password for user
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+
+      // Hash the password
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+
+      const nameArray = displayName.split(" ");
+      const firstName = nameArray[0];
+      const lastName = nameArray[nameArray.length - 1];
+
+      // Create User object
+      const newUser = new User({
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+        avatar: photoURL,
+      });
+
+      await newUser.save(); //Insert new user into database
+
+      generateToken(res, newUser._id); //Generate token and store in cookie
+
+      const { password: userPassword, ...rest } = newUser._doc;
+
+      res.status(201).json(rest);
+    }
   } catch (error) {
     next(error);
   }
@@ -96,4 +153,4 @@ const userLogout = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { userRegister, userLogin, userLogout };
+export { userRegister, userLogin, userLogout, userGoogleLogin };
