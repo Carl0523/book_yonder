@@ -7,8 +7,9 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CustomButton from "../components/utils/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
-import * as apiFunctions from "../apiFunctions";
 import { setCredential } from "../redux/slices/userSlice";
+import { motion } from "framer-motion";
+import axios from "axios";
 
 // The type of register form data
 export type RegisterForm = {
@@ -19,16 +20,19 @@ export type RegisterForm = {
   confirmPassword: string;
 };
 
-const RegisterPage = () => {
+const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
+const RegisterPage = () => {
   // State for the visibility of password and confirm password
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Handle any errors that cannot handle by react-hook-form errors
+  const [error, setError] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {userInfo} = useSelector((state : RootState) => state.user);
-
+  const { userInfo } = useSelector((state: RootState) => state.user);
 
   const {
     register, // Function to register input fields with the form
@@ -39,36 +43,46 @@ const RegisterPage = () => {
 
   // Function to toggle the visibility of password
   const handleShowPassword = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prevState) => !prevState);
   };
 
   // Function to toggle the visibility of confirm password
   const handleShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
+    setShowConfirmPassword((prevState) => !prevState);
   };
 
   /**
    * Send the data to the server side and store info in local storage
    */
   const onSubmit = handleSubmit((data) => {
-    apiFunctions.register(data);
-    dispatch(setCredential(data));
+    axios
+      .post(`${baseUrl}/api/auth/register`, data, { withCredentials: true })
+      .then((res) => {
+        setError(null);
+        dispatch(setCredential(res.data));
+      })
+      .catch((error) => {
+        const customMessage = error.response.data.message;
+        setError(customMessage ? customMessage : error.message);
+      });
   });
 
   // Make sure user is redirect to home screen when trying to access register
   // page through url
   useEffect(() => {
-    if (userInfo)
-    {
-        navigate("/")
+    if (userInfo) {
+      navigate("/");
     }
-  }, [userInfo])
+  }, [userInfo]);
 
   return (
     <div className="flex p-5">
       {/* 1. The register decorated image on the left */}
       <div className="md:flex-1 md:block hidden p-6">
-        <img
+        <motion.img
+          initial={{ y: -500 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
           src={registerImage}
           alt="Register image"
           className="w-full h-[90vh]"
@@ -137,7 +151,7 @@ const RegisterPage = () => {
         <label htmlFor="email" className="font-semibold text-primary">
           Email
           <input
-            type="email"
+            type="text"
             id="email"
             placeholder="bookyonder@gmail.com"
             className={`w-full block font-normal border border-primary ${
@@ -153,9 +167,7 @@ const RegisterPage = () => {
               },
             })}
           />
-          {errors.email && (
-            <p className="text-red-500 font-normal">{errors.email.message}</p>
-          )}
+          <p className="text-red-500 font-normal">{errors.email ? errors.email.message : error && error}</p>
         </label>
 
         {/* 2D. The password */}
@@ -170,7 +182,7 @@ const RegisterPage = () => {
                 errors.password && "border-red-500"
               } rounded-md py-2 px-3`}
               {...register("password", {
-                required: "Please enter your password please",
+                required: "Enter your password please",
                 minLength: {
                   value: 8,
                   message:
@@ -211,7 +223,7 @@ const RegisterPage = () => {
               {...register("confirmPassword", {
                 validate: (input) => {
                   if (!input) {
-                    return "Please confirm your password please";
+                    return "Confirm your password please";
                   } else if (watch("password") !== input) {
                     return "The Password entered does not matched";
                   }
@@ -246,8 +258,11 @@ const RegisterPage = () => {
             responsiveWidth="w-full"
             customCSS="mt-5"
           />
-          <p className="self-center">
-            Already have an account? <Link to="/login" className="underline text-primary">Login</Link>
+          <p className="self-center text-primary">
+            Already have an account?{" "}
+            <Link to="/login" className="underline font-bold">
+              Login
+            </Link>
           </p>
         </div>
         {/* 2F. The google login button */}
@@ -258,7 +273,7 @@ const RegisterPage = () => {
           bgColor="bg-white"
           textColor="text-primary"
           responsiveWidth="w-full"
-          customCSS="mt-3 border border-primary"
+          customCSS="mt-1 border border-primary"
         />
       </form>
     </div>
