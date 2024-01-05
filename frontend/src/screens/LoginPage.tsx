@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import axios from "axios";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 
 import { loginImage } from "../assets";
@@ -15,6 +14,7 @@ import { setCredential } from "../redux/slices/userSlice";
 import CustomButton from "../components/utils/CustomButton";
 
 import "react-toastify/dist/ReactToastify.css";
+import GoogleAuth from "../components/GoogleAuth";
 
 // The type of login form data
 export type LoginForm = {
@@ -158,22 +158,14 @@ const LoginPage = () => {
           />
           <p className="self-center text-primary">
             Don't have an account?{" "}
-            <Link to="/login" className="underline font-bold">
+            <Link to="/register" className="underline font-bold">
               Sign up now
             </Link>
           </p>
         </div>
 
         {/* 1E. The google login button */}
-        <CustomButton
-          text="Login With Google"
-          padding="py-3"
-          icon={<FcGoogle className="text-xl" />}
-          bgColor="bg-white"
-          textColor="text-primary"
-          responsiveWidth="w-full"
-          customCSS="mt-1 border border-primary"
-        />
+        <GoogleAuth/>
       </form>
 
       {/* 2. The login decorated image on the left */}

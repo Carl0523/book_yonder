@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { registerImage } from "../assets";
-import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CustomButton from "../components/utils/CustomButton";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredential } from "../redux/slices/userSlice";
 import { motion } from "framer-motion";
 import axios from "axios";
+import GoogleAuth from "../components/GoogleAuth";
 
 // The type of register form data
 export type RegisterForm = {
@@ -266,15 +266,7 @@ const RegisterPage = () => {
           </p>
         </div>
         {/* 2F. The google login button */}
-        <CustomButton
-          text="Login With Google"
-          padding="py-3"
-          icon={<FcGoogle className="text-xl" />}
-          bgColor="bg-white"
-          textColor="text-primary"
-          responsiveWidth="w-full"
-          customCSS="mt-1 border border-primary"
-        />
+        <GoogleAuth/>
       </form>
     </div>
   );
