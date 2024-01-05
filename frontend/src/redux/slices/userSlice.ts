@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {UserType} from "../../../../backend/src/models/user.model";
 
-const initialState = localStorage.getItem("userInfo")
-  ? { userInfo: localStorage.getItem("userInfo") }
+
+interface UserState {
+  userInfo: UserType | null;
+}
+
+const initialState : UserState = localStorage.getItem("userInfo")
+  ? { userInfo: JSON.parse(localStorage.getItem("userInfo")!) }
   : { userInfo: null };
 
 const userSlice = createSlice({
