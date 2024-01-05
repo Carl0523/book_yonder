@@ -8,8 +8,10 @@ import {
 import { Provider } from "react-redux";
 import App from "./App.tsx";
 import "./index.css";
+
 import HomePage from "./screens/HomePage.tsx";
 import RegisterPage from "./screens/RegisterPage.tsx";
+import LoginPage from "./screens/LoginPage.tsx";
 import { store } from "./redux/store.ts";
 
 const router = createBrowserRouter(
@@ -17,6 +19,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="/" index={true} element={<HomePage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<LoginPage/>}/>
     </Route>
   )
 );
