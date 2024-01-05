@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png",
+    default: "https://img.freepik.com/free-vector/young-woman-white_25030-39548.jpg?w=900&t=st=1704433648~exp=1704434248~hmac=63699a6214db694771759ae9e3c28163bd3e7fc37b088ad9b750dee07a2b7fb1",
   }
 }, {timestamps: true});
 
