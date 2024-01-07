@@ -14,7 +14,9 @@ import { setCredential } from "../redux/slices/userSlice";
 import CustomButton from "../components/utils/CustomButton";
 
 import "react-toastify/dist/ReactToastify.css";
-import GoogleAuth from "../components/GoogleAuth";
+import GoogleAuth from "../components/auths/GoogleAuth";
+import Facebook from "../components/auths/Facebook";
+import Divider from "../components/Divider";
 
 // The type of login form data
 export type LoginForm = {
@@ -162,10 +164,14 @@ const LoginPage = () => {
               Sign up now
             </Link>
           </p>
-        </div>
+        </div> 
+          
+        {/* DIVIDER LINE BETWEEN BUTTONS */}
+        <Divider/>
 
         {/* 1E. The google login button */}
-        <GoogleAuth/>
+        <GoogleAuth />
+        <Facebook />
       </form>
 
       {/* 2. The login decorated image on the left */}
@@ -176,7 +182,7 @@ const LoginPage = () => {
           transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
           src={loginImage}
           alt="Login image"
-          className="w-full h-[90vh]"
+          className="w-full h-full"
         />
       </div>
     </div>

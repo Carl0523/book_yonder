@@ -9,7 +9,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { setCredential } from "../redux/slices/userSlice";
 import { motion } from "framer-motion";
 import axios from "axios";
-import GoogleAuth from "../components/GoogleAuth";
+import GoogleAuth from "../components/auths/GoogleAuth";
+import Divider from "../components/Divider";
+import Facebook from "../components/auths/Facebook";
 
 // The type of register form data
 export type RegisterForm = {
@@ -78,28 +80,28 @@ const RegisterPage = () => {
   return (
     <div className="flex p-5">
       {/* 1. The register decorated image on the left */}
-      <div className="md:flex-1 md:block hidden p-6">
+      <div className="md:flex-1 md:block hidden px-5">
         <motion.img
           initial={{ y: -500 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
           src={registerImage}
           alt="Register image"
-          className="w-full h-[90vh]"
+          className="w-full h-full"
         />
       </div>
 
       {/* 2. The register form */}
       <form
         onSubmit={onSubmit}
-        className="flex-1 flex flex-col gap-3 py-8 px-2"
+        className="flex-1 flex flex-col gap-2 py-8 px-2"
       >
         {/* 2A. The Header text */}
         <h1 className="text-3xl font-bold mb-4 text-primary">
           Create an account
         </h1>
         {/* 2B. The first name and last name */}
-        <div className="flex md:flex-row flex-col gap-4">
+        <div className="flex md:flex-row flex-col md:gap-4 gap-2">
           <label
             htmlFor="firstName"
             className="font-semibold flex-1 text-primary"
@@ -167,7 +169,9 @@ const RegisterPage = () => {
               },
             })}
           />
-          <p className="text-red-500 font-normal">{errors.email ? errors.email.message : error && error}</p>
+          <p className="text-red-500 font-normal">
+            {errors.email ? errors.email.message : error && error}
+          </p>
         </label>
 
         {/* 2D. The password */}
@@ -265,8 +269,13 @@ const RegisterPage = () => {
             </Link>
           </p>
         </div>
+
+        {/* DIVIDER LINE BETWEEN BUTTONS */}
+        <Divider />
+
         {/* 2F. The google login button */}
-        <GoogleAuth/>
+        <GoogleAuth />
+        <Facebook/>
       </form>
     </div>
   );
