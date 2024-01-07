@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { GiExitDoor } from "react-icons/gi";
-import { RxAvatar } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
+import { FaBuilding, FaCalendarAlt } from "react-icons/fa";
+import { IoClose, IoPerson } from "react-icons/io5";
 
 import CustomButton from "./utils/CustomButton";
 import { logo } from "../assets";
@@ -52,7 +52,7 @@ const Navbar = () => {
             onClick={() => {
               setIsMenuOpen((prevState) => !prevState);
             }}
-            className="flex gap-2 items-center cursor-pointer"
+            className="flex gap-2 p-2  items-center cursor-pointer hover:bg-blue-200 rounded-lg"
           >
             <motion.img
               whileHover={{ scale: 1.1 }}
@@ -60,7 +60,7 @@ const Navbar = () => {
               alt="avatar"
               className="h-10 rounded-full border-2 border-primary"
             />
-            <p className="text-primary font-serif">{`${userInfo.firstName}  ${userInfo.lastName}`}</p>
+            <p className="md:flex hidden text-primary font-serif">{`${userInfo.firstName}  ${userInfo.lastName}`}</p>
           </div>
 
           {/* MENU: DISPLAY when click the avatar */}
@@ -71,7 +71,7 @@ const Navbar = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 10, opacity: 0 }}
                 transition={{ duration: 1, type: "spring" }}
-                className="absolute top-[4.5rem] right-7 flex flex-col gap-2 w-48 p-5 bg-primary text-white z-30 rounded-md"
+                className="w-56 absolute top-[4.5rem] right-7 flex flex-col gap-4 p-5 bg-primary text-white z-30 rounded-md"
               >
                 <IoClose
                   onClick={() => {
@@ -81,10 +81,25 @@ const Navbar = () => {
                 />
                 <Link to="/profile">
                   <IconText
-                    text="View Profile"
-                    icon={<RxAvatar className="text-2xl" />}
+                    text="Manage Profile"
+                    icon={<IoPerson className="text-xl" />}
                   />
                 </Link>
+
+                <Link to="/my_property">
+                  <IconText
+                    text="My Property"
+                    icon={<FaBuilding className="text-xl" />}
+                  />
+                </Link>
+
+                <Link to="/my_bookings">
+                  <IconText
+                    text="My Bookings"
+                    icon={<FaCalendarAlt className="text-xl" />}
+                  />
+                </Link>
+                <hr className="border-t n" />
                 <Link to="/" onClick={handleLogout}>
                   <IconText
                     text="Logout"
