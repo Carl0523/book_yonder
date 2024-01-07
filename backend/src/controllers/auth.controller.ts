@@ -86,16 +86,24 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
  * @param res Response the client with userinfo excluding the password
  * @param next Handle error
  */
-const userGoogleLogin = async (
+const userOAuthLogin = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { email, displayName, photoURL } = req.body;
-
+  let { email, displayName, photoURL } = req.body;
   try {
-    const user = await User.findOne({ email });
 
+    const nameArray = displayName.split(" ");
+    const firstName = nameArray[0];
+    const lastName = nameArray[nameArray.length - 1];
+
+    // For some facebook user, they have unconfirmed email, in this case,
+    // we create email for them
+    if (!email) email = firstName+lastName+"@facebook.com";
+
+    const user = await User.findOne({ email });
+    
     // First, Check for registered user
     if (user) {
       generateToken(res, user._id);
@@ -109,10 +117,6 @@ const userGoogleLogin = async (
 
       // Hash the password
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
-
-      const nameArray = displayName.split(" ");
-      const firstName = nameArray[0];
-      const lastName = nameArray[nameArray.length - 1];
 
       // Create User object
       const newUser = new User({
@@ -153,4 +157,4 @@ const userLogout = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { userRegister, userLogin, userLogout, userGoogleLogin };
+export { userRegister, userLogin, userLogout, userOAuthLogin };
