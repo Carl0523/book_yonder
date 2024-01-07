@@ -2,10 +2,10 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
-import CustomButton from "./utils/CustomButton";
+import CustomButton from "../utils/CustomButton";
 import { FcGoogle } from "react-icons/fc";
-import { app } from "../firebase";
-import { setCredential } from "../redux/slices/userSlice";
+import { app } from "../../firebase";
+import { setCredential } from "../../redux/slices/userSlice";
 
 const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
@@ -22,10 +22,12 @@ const GoogleAuth = () => {
     const auth = getAuth(app);
     const result = await signInWithPopup(auth, provider);
 
+    provider.addScope("user_email")
+
     // Send a POST request to google auth api route
     axios
       .post(
-        `${baseUrl}/api/auth/google`,
+        `${baseUrl}/api/auth/oauth`,
         {
           email: result.user.email,
           photoURL: result.user.photoURL,
@@ -43,7 +45,7 @@ const GoogleAuth = () => {
 
   return (
     <CustomButton
-      text="Login With Google"
+      text="Continue With Google"
       padding="py-3"
       icon={<FcGoogle className="text-xl" />}
       bgColor="bg-white"
