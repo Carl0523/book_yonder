@@ -12,9 +12,9 @@ interface IconTextProps {
 const IconText : React.FC<IconTextProps> = ({
     text,
     icon,
-    gap = "gap-3",
+    gap = "gap-4",
     textColor = "text-blue-100",
-    textSize = "text-lg",
+    textSize = "text-base",
     customCSS = ""
 }) => {
   return (
