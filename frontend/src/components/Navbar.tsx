@@ -38,7 +38,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full top-0 left-0 sticky flex justify-between items-center py-5 px-10 bg-blue-100 z-20">
+    <div className="w-full top-0 left-0 sticky flex justify-between items-center py-3 px-10 bg-blue-100 z-20">
       {/* 1. The LOGO */}
       <Link to="/">
         <img src={logo} alt="logo" className="w-28" />
@@ -58,6 +58,7 @@ const Navbar = () => {
               whileHover={{ scale: 1.1 }}
               src={userInfo.avatar}
               alt="avatar"
+              referrerPolicy="no-referrer"
               className="h-10 rounded-full border-2 border-primary"
             />
             <p className="md:flex hidden text-primary font-serif">{`${userInfo.firstName}  ${userInfo.lastName}`}</p>
@@ -71,7 +72,7 @@ const Navbar = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 10, opacity: 0 }}
                 transition={{ duration: 1, type: "spring" }}
-                className="w-56 absolute top-[4.5rem] right-7 flex flex-col gap-4 p-5 bg-primary text-white z-30 rounded-md"
+                className="w-56 absolute top-20 right-7 flex flex-col gap-4 p-5 bg-primary text-white z-30 rounded-md"
               >
                 <IoClose
                   onClick={() => {
@@ -79,9 +80,9 @@ const Navbar = () => {
                   }}
                   className="text-xl self-end cursor-pointer"
                 />
-                <Link to="/profile">
+                <Link to="/account" onClick={() => {setIsMenuOpen(false)}}>
                   <IconText
-                    text="Manage Profile"
+                    text="Manage Account"
                     icon={<IoPerson className="text-xl" />}
                   />
                 </Link>
