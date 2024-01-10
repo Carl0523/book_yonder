@@ -57,10 +57,7 @@ const LoginPage = () => {
         toast.error(customMessage || error.message, {
           position: "top-right",
           autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          pauseOnHover: false,
           progress: undefined,
           theme: "light",
         });
