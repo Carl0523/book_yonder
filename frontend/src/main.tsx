@@ -13,13 +13,20 @@ import HomePage from "./screens/HomePage.tsx";
 import RegisterPage from "./screens/RegisterPage.tsx";
 import LoginPage from "./screens/LoginPage.tsx";
 import { store } from "./redux/store.ts";
+import AccountPage from "./screens/account_page/AccountPage.tsx";
+import PrivateRoute from "./components/PrivateRoute.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" index={true} element={<HomePage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/login" element={<LoginPage />} />
+
+      {/* Private Routes */}
+      <Route path="" element={<PrivateRoute />}>
+        <Route path="/account" element={<AccountPage />} />
+      </Route>
     </Route>
   )
 );
