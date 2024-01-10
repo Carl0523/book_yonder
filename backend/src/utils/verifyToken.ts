@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-const verifyToken = (req : Request, res: Response, next: NextFunction) => {
+export const verifyToken = (req : Request, res: Response, next: NextFunction) => {
 
     // 1. Extract the named "access_token" cookie in the coming request"
     // NOTE: it should be a string to do cookie-parser middleware function
