@@ -275,7 +275,7 @@ const RegisterPage = () => {
 
         {/* 2F. The google login button */}
         <GoogleAuth />
-        <Facebook/>
+        <Facebook />
       </form>
     </div>
   );
