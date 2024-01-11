@@ -167,7 +167,7 @@ const EditProfile: React.FC<ProfileProps> = ({
             </p>
           )}
         </label>
-        {/* The update button */}
+        {/* 4. The update button */}
         <CustomButton
           type="submit"
           disabled={disabledButton}
