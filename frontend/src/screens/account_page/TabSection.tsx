@@ -16,6 +16,7 @@ interface TabSectionProps {
   userAvatar: string | undefined;
   tabIndex: number;
   onHandleTab: (index: number) => void;
+  onOpenModal: () => void;
 }
 
 const TabSection: React.FC<TabSectionProps> = ({
@@ -24,6 +25,7 @@ const TabSection: React.FC<TabSectionProps> = ({
   userAvatar,
   tabIndex,
   onHandleTab,
+  onOpenModal
 }) => {
 
   const dispatch = useDispatch();
@@ -106,7 +108,7 @@ const TabSection: React.FC<TabSectionProps> = ({
         {/* DIVIDER LINE */}
         <hr />
         {/* 2E. Delete account */}
-        <p className="text-red-500 font-light cursor-pointer">Delete Account</p>
+        <p className="text-red-500 font-light cursor-pointer" onClick={onOpenModal}>Delete Account</p>
       </div>
     </motion.div>
   );
