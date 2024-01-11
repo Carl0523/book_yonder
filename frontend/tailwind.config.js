@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         primary: "#4B91F1",
+        overlay: "rgba(0, 0, 0, 0.6)"
       },
       borderRadius: {
         buttonRadius: "1.5rem"
