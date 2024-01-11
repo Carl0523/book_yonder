@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store";
 
 import TabSection from "./TabSection";
 import EditProfile from "./EditProfile";
+import EditPassword from "./EditPassword";
 
 const AccountPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -39,9 +40,9 @@ const AccountPage = () => {
             userId={userInfo!._id}
           />
         ) : tabIndex === 1 ? (
-          "content2"
+          "Payment"
         ) : (
-          "content3"
+          <EditPassword userId={userInfo!._id}/>
         )}
       </div>
     </div>
