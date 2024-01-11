@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import User from "../models/user.model";
 
@@ -35,14 +36,47 @@ const updateProfile = async (
       },
       { new: true }
     );
-    
-    const {password, ...rest} = updatedUser!._doc;
+
+    const { password, ...rest } = updatedUser!._doc;
 
     res.status(200).json(rest);
-
   } catch (error) {
     next(error);
   }
 };
 
-export { updateProfile };
+/**
+ * Hash the password and then update it in database
+ * @param req The request from client: including password
+ * @param res The response containing the updated info
+ * @param next the next function to handle the error
+ */
+const updatePassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  // Return not authorized error if not matched with token id
+  if (req.params.id !== req.userId) return res.status(401).json("Unauthorized");
+
+  try {
+    const hashedPassword = bcrypt.hashSync(req.body.newPassword);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.userId,
+      {
+        $set: {
+          password: hashedPassword,
+        },
+      },
+      { new: true }
+    );
+    const { password, ...rest } = updatedUser!._doc;
+
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { updateProfile, updatePassword };
