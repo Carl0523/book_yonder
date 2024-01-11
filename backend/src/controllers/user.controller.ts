@@ -56,11 +56,22 @@ const updatePassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  // Return not authorized error if not matched with token id
-  if (req.params.id !== req.userId) return res.status(401).json("Unauthorized");
+  const {newPassword, oldPassword} = req.body;
 
+  // 1. Return not authorized error if not matched with token id
+  if (req.params.id !== req.userId)
+    return res.status(401).json({ message: "Unauthorized" });
+
+  // 2. Check if entered old password is correct
+  const user = await User.findById(req.params.id);
+  if (!bcrypt.compareSync(oldPassword, user!.password))
+    return res
+      .status(400)
+      .json({ message: "You have entered incorrect old password" });
+
+  // 3. Hash the password and updated it in database
   try {
-    const hashedPassword = bcrypt.hashSync(req.body.newPassword);
+    const hashedPassword = bcrypt.hashSync(newPassword);
 
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
