@@ -1,14 +1,14 @@
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
+
 import { IoPersonSharp } from "react-icons/io5";
 import { BsCreditCard2FrontFill } from "react-icons/bs";
 import { FaLock } from "react-icons/fa";
 import { RiLogoutBoxRFill } from "react-icons/ri";
+import { TbPhotoEdit } from "react-icons/tb";
 
 import IconText from "../../components/utils/IconText";
-import { userLogout } from "../../redux/slices/userSlice"; 
-
-
+import { userLogout } from "../../redux/slices/userSlice";
 
 interface TabSectionProps {
   userEmail: string;
@@ -16,7 +16,8 @@ interface TabSectionProps {
   userAvatar: string | undefined;
   tabIndex: number;
   onHandleTab: (index: number) => void;
-  onOpenModal: () => void;
+  onOpenDeleteModal: () => void;
+  onOpenAvatarModal: () => void;
 }
 
 const TabSection: React.FC<TabSectionProps> = ({
@@ -25,9 +26,9 @@ const TabSection: React.FC<TabSectionProps> = ({
   userAvatar,
   tabIndex,
   onHandleTab,
-  onOpenModal
+  onOpenDeleteModal,
+  onOpenAvatarModal,
 }) => {
-
   const dispatch = useDispatch();
   return (
     <motion.div
@@ -38,19 +39,28 @@ const TabSection: React.FC<TabSectionProps> = ({
     >
       {/* 1. The brief user info section: Avatar, email, and name */}
       <div className="flex flex-col items-center gap-2 self-center">
-        <img
-          src={userAvatar}
-          alt="user avatar"
-          className="w-24 border rounded-full border-primary"
-        />
+        {/* 1A. The avatar and edit icon */}
+        <div className="relative">
+          <img
+            src={userAvatar}
+            alt="user avatar"
+            className="w-24 border rounded-full border-primary"
+          />
+          <TbPhotoEdit
+            onClick={onOpenAvatarModal}
+            className="absolute top-2/3 right-0 text-3xl bg-primary text-white p-[0.35rem] rounded-full cursor-pointer"
+          />
+        </div>
+        {/* 1B. The user's full name */}
         <h1 className="text-lg ">{userName}</h1>
+        {/* 1C. The user's email */}
         <h2 className="text-sm text-gray-400">{userEmail}</h2>
       </div>
 
       {/* 2. The tab list */}
       <div className="flex flex-col gap-5">
         {/* DIVIDER LINE */}
-        <hr className="mb-1"/>
+        <hr className="mb-1" />
         {/* 2A. The profile tab */}
         <IconText
           text="My Profile"
@@ -103,12 +113,19 @@ const TabSection: React.FC<TabSectionProps> = ({
           icon={<RiLogoutBoxRFill />}
           textColor="black"
           customCSS="font-light"
-          onClick={() => {dispatch(userLogout())}}
+          onClick={() => {
+            dispatch(userLogout());
+          }}
         />
         {/* DIVIDER LINE */}
         <hr />
         {/* 2E. Delete account */}
-        <p className="text-red-500 font-light cursor-pointer" onClick={onOpenModal}>Delete Account</p>
+        <p
+          className="text-red-500 font-light cursor-pointer"
+          onClick={onOpenDeleteModal}
+        >
+          Delete Account
+        </p>
       </div>
     </motion.div>
   );
