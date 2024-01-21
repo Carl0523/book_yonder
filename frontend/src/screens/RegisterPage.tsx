@@ -181,7 +181,7 @@ const RegisterPage = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
-              placeholder="********"
+              placeholder="••••••••"
               className={`w-full relative block font-normal border border-primary ${
                 errors.password && "border-red-500"
               } rounded-md py-2 px-3`}
@@ -220,7 +220,7 @@ const RegisterPage = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
-              placeholder="********"
+              placeholder="••••••••"
               className={`w-full block font-normal border border-primary ${
                 errors.confirmPassword && "border-red-500"
               } rounded-md py-2 px-3`}

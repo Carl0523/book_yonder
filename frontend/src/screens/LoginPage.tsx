@@ -114,7 +114,7 @@ const LoginPage = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
-              placeholder="********"
+              placeholder="••••••••"
               className={`w-full block font-normal border border-primary ${
                 errors.email && "border-red-500"
               } rounded-md py-2 px-3`}
