@@ -96,18 +96,55 @@ const updatePassword = async (
  * @param res response including a simple message
  * @param next handle the error
  */
-const deleteAccount = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.params.id != req.userId) return res.status(401).json({message: "Unauthorized"});
+const deleteAccount = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.params.id != req.userId)
+    return res.status(401).json({ message: "Unauthorized" });
 
   try {
     await User.findByIdAndDelete(req.userId);
     res.cookie("access_token", "", {
-      expires: new Date(0)
+      expires: new Date(0),
     });
-    res.status(200).json({message: "Account deleted"});
+    res.status(200).json({ message: "Account deleted" });
+  } catch (error) {
+    next(error);
+  }
+};
+/**
+ * Update the user's avatar
+ * @param req POST Request send from client side: containing new avatar URL
+ * @param res Response with user's newest info
+ * @param next next function to handle the error
+ */
+const updateAvatar = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.params.id !== req.userId)
+    return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.userId,
+      {
+        $set: {
+          avatar: req.body.newAvatarURL
+        },
+      },
+      { new: true }
+    );
+    const { password, ...rest } = updatedUser!._doc;
+
+    res.status(200).json(rest);
+
   } catch (error) {
     next(error);
   }
 };
 
-export { updateProfile, updatePassword, deleteAccount };
+export { updateProfile, updatePassword, deleteAccount, updateAvatar };
