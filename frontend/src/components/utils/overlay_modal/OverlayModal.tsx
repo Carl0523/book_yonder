@@ -8,10 +8,13 @@ interface OverlayModalProps {
   height?: string;
   modalColor?: string;
   imageURL?: string;
-  title: string;
-  message: string;
+  header?: string,
+  title?: string;
+  message?: string;
   buttonText: string;
+  buttonTextColor?: string;
   buttonColor?: string;
+  buttonDisabled?: boolean;
   onCloseModal: () => void;
   onConfirm: () => void;
 }
@@ -21,10 +24,13 @@ const OverlayModal: React.FC<OverlayModalProps> = ({
   height = "",
   modalColor = "bg-white",
   imageURL = null,
-  title,
-  message,
+  header = null,
+  title = null,
+  message = null,
   buttonText,
+  buttonTextColor = "text-red-500",
   buttonColor = "",
+  buttonDisabled = false,
   onCloseModal,
   onConfirm
 }) => {
@@ -37,28 +43,32 @@ const OverlayModal: React.FC<OverlayModalProps> = ({
           transition={{ duration: 0.3 }}
           className={`fixed top-1/2 left-1/2 flex flex-col items-center gap-5 p-8 ${width} ${height} ${modalColor} rounded-md z-60`}
         >
+          {/* Optional: The header of the modal */}
+          {header && <h1 className="text-2xl">{header}</h1>}
           {/* 1. the close button */}
           <IoCloseSharp
             onClick={onCloseModal}
-            className="self-end text-2xl cursor-pointer"
+            className="absolute top-5 right-5 text-2xl cursor-pointer"
           />
-          {/* OPTIONAL: If image exist, show image in the center of the modal */}
+          {/* Optional: If image exist, show image in the center of the modal */}
           {imageURL && (
-            <img src={imageURL} alt="Disconnect" className="w-[400px]" />
+            <img src={imageURL} alt="image" className="w-[400px] h-[300px] object-contain" />
           )}
-          {/* 2. The header text */}
-          <h1 className="text-lg font-semibold">{title}</h1>
+          {/* Optional. The title of the message */}
+          {title && <h1 className="text-lg font-semibold">{title}</h1>}
 
-          {/* 3. The message: subtext */}
-          <p className="w-2/3 text-gray-400 text-center text-sm">{message}</p>
+          {/* Optional. The message: subtext */}
+          {message && <p className="w-2/3 text-gray-400 text-center text-sm">{message}</p>}
 
-          {/* 4. The cancel button and confirm button */}
-          <div className="w-2/3 flex justify-between">
-            <CustomButton text="I'll stay" responsiveWidth="w-1/2" buttonHandler={onCloseModal}/>
+          {/* 2. The cancel button and confirm button */}
+          <div className="w-10/12 flex justify-between">
+            <CustomButton text="Cancel" responsiveWidth="w-[40%]" buttonHandler={onCloseModal} disabled={buttonDisabled}/>
             <CustomButton
               text={buttonText}
-              textColor="text-red-500"
+              textColor={buttonTextColor}
               bgColor={buttonColor}
+              responsiveWidth="w-[50%]"
+              disabled={buttonDisabled}
               buttonHandler={onConfirm}
             />
           </div>
