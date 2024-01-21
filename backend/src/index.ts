@@ -6,6 +6,7 @@ import "dotenv/config";
 
 import authRouter from "./routes/auth.route";
 import userRouter from "./routes/user.route";
+import hotelsRouter from "./routes/hotels.route";
 
 // Set up the connection with mongo db
 mongoose
@@ -31,6 +32,7 @@ app.use(cookieParser());
 // Set up routers
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/hotels", hotelsRouter);
 
 // Middleware function to handle the error
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
