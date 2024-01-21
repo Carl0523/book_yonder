@@ -62,6 +62,7 @@ const EditPassword: React.FC<PasswordProp> = ({ userId }) => {
         <input
           type="password"
           id="oldPassword"
+          placeholder="••••••••"
           className={`w-full block font-normal border ${
             errors.oldPassword && "border-red-500"
           } rounded-md py-2 px-3`}
@@ -82,6 +83,7 @@ const EditPassword: React.FC<PasswordProp> = ({ userId }) => {
         <input
           type="password"
           id="newPassword"
+          placeholder="••••••••"
           className={`w-full block font-normal border ${
             errors.newPassword && "border-red-500"
           } rounded-md py-2 px-3`}
@@ -105,6 +107,7 @@ const EditPassword: React.FC<PasswordProp> = ({ userId }) => {
         <input
           type="password"
           id="confirmNewPassword"
+          placeholder="••••••••"
           className={`w-full block font-normal border ${
             errors.confirmNewPassword && "border-red-500"
           } rounded-md py-2 px-3`}
