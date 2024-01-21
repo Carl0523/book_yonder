@@ -9,8 +9,10 @@ import Hotel, { HotelType } from "../models/hotel.model";
  * @param next handle error
  */
 const createHotel = async (req: Request, res: Response, next: NextFunction) => {
+  const hotelData: HotelType = req.body;
+  if (hotelData.userId !== req.userId)
+    return res.status(401).json({ message: "Unauthorized" });
   try {
-    const hotelData: HotelType = req.body;
     const hotel = await Hotel.create(hotelData);
     res.status(201).json(hotel);
   } catch (error) {
