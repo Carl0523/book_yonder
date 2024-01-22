@@ -15,6 +15,9 @@ import LoginPage from "./screens/LoginPage.tsx";
 import { store } from "./redux/store.ts";
 import AccountPage from "./screens/account_page/AccountPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
+import MyPropertyPage from "./screens/my_property_page/MyPropertyPage.tsx";
+import AddPropertyPage from "./screens/my_property_page/add_property_page/AddPropertyPage.tsx";
+import PropertyHomePage from "./screens/my_property_page/PropertyHomePage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,7 +28,17 @@ const router = createBrowserRouter(
 
       {/* Private Routes */}
       <Route path="" element={<PrivateRoute />}>
+
         <Route path="/account" element={<AccountPage />} />
+        
+        <Route path="/my_property" element={<MyPropertyPage />}>
+          <Route path="/my_property" element={<PropertyHomePage />} />
+          <Route
+            path="/my_property/add_property"
+            element={<AddPropertyPage />}
+          />
+        </Route>
+
       </Route>
     </Route>
   )
