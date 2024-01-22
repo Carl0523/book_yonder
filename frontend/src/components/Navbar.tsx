@@ -71,7 +71,7 @@ const Navbar = () => {
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 10, opacity: 0 }}
-                transition={{ duration: 1, type: "spring" }}
+                transition={{ duration: 0.5, type: "spring" }}
                 className="w-56 absolute top-20 right-7 flex flex-col gap-4 p-5 bg-primary text-white z-30 rounded-md"
               >
                 <IoClose
@@ -87,14 +87,14 @@ const Navbar = () => {
                   />
                 </Link>
 
-                <Link to="/my_property">
+                <Link to="/my_property" onClick={() => {setIsMenuOpen(false)}}>
                   <IconText
                     text="My Property"
                     icon={<FaBuilding className="text-xl" />}
                   />
                 </Link>
 
-                <Link to="/my_bookings">
+                <Link to="/my_bookings" onClick={() => {setIsMenuOpen(false)}}>
                   <IconText
                     text="My Bookings"
                     icon={<FaCalendarAlt className="text-xl" />}
