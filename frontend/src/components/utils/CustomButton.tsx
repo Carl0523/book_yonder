@@ -3,11 +3,12 @@ import { motion } from "framer-motion";
 
 
 interface CustomButtonProps {
-  text: string;
+  text?: string;
   icon?: ReactNode;
   textColor?: string;
   bgColor?: string;
   responsiveWidth?: string;
+  radius?: string;
   padding?: string;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -16,11 +17,12 @@ interface CustomButtonProps {
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
-  text,
+  text=null,
   icon=undefined,
   textColor = "text-blue-100",
   bgColor = "bg-primary",
   responsiveWidth = "",
+  radius="rounded-buttonRadius",
   padding = "py-2 px-4",
   type = "button",
   disabled = false,
@@ -34,7 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       type={type}
       disabled={disabled}
       onClick={buttonHandler}
-      className={`flex justify-center items-center gap-4 ${responsiveWidth} ${padding} ${textColor} ${bgColor} rounded-buttonRadius font-semibold active: ${customCSS} disabled:bg-gray-300 disabled:text-gray-600`}
+      className={`flex justify-center items-center gap-4 ${responsiveWidth} ${padding} ${textColor} ${bgColor} ${radius} font-semibold disabled:bg-gray-300 disabled:text-gray-600 ${customCSS}`}
     >
       {icon}
       {text}
