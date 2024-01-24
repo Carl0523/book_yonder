@@ -7,6 +7,9 @@ export type HotelType = {
   pricePerNight: number;
   address: string;
   country: string;
+  city: string;
+  state: string;
+  zipCode: string;
   type: string;
   description: string;
   adultCount: number;
@@ -22,49 +25,61 @@ const hotelSchema = new mongoose.Schema<HotelType>(
       type: String,
       required: true,
     },
-    name: {
+    name: { //Name and location
       type: String,
       required: true,
     },
-    pricePerNight: {
+    pricePerNight: { //Property set up
       type: Number,
       required: true,
     },
-    address: {
+    address: { //Name and location
       type: String,
       required: true,
     },
-    country: {
+    city: {
       type: String,
       required: true,
     },
-    type: {
+    state: {
       type: String,
       required: true,
     },
-    description: {
+    zipCode: {
       type: String,
       required: true,
     },
-    adultCount: {
+    country: { //Name and location
+      type: String,
+      required: true,
+    },
+    type: { //Name and location
+      type: String,
+      required: true,
+    },
+    description: { //Property set up
+      type: String,
+      required: true,
+    },
+    adultCount: { //Property set up
       type: Number,
       required: true,
     },
-    childCount: {
+    childCount: { //Property set up
       type: Number,
       required: true,
     },
-    amenities: {
+    amenities: { //Property set up
       type: [String],
       required: true,
     },
-    rating: {
+    rating: { //Property set up
       type: Number,
       required: true,
       min: 1,
       max: 5,
     },
-    imageUrls: {
+    imageUrls: { //Property photo
       type: [String],
       required: true,
     },
